@@ -10,7 +10,8 @@ enum {
 	WANDER,
 	CHASE
 }
-var level = 1 # La till level för fienden.
+var level = 0 # La till level för fienden.
+var experience = 1 #Bestämmer ökningen av level vid död
 const ACCEL = 300
 const FRICT = 1200
 
@@ -62,7 +63,7 @@ func _on_Hurtbox_area_entered(area):
 	knock_back = knock_back.normalized() * ACCEL
 
 
-func _on_Hurtbox_no_health():
+func _on_Hurtbox_no_health(_enemy):
 	$AudioStreamPlayer.play()
 	state = IDLE
 	# warning-ignore:return_value_discarded
@@ -73,11 +74,10 @@ func _on_Hurtbox_no_health():
 	$AnimatedSprite.play("Die")
 	emit_signal("xp")
 
-
 func _on_DeathAnimation_finished():
 	hide()
-	level += 1
-	$Respawn.start(1)
+	level += experience
+	$Respawn.start(2)
 
 
 func _on_PlayerDetection_body_entered(body):
@@ -97,6 +97,9 @@ func _on_WanderTimer_timeout():
 
 func _on_Respawn_timeout():
 	show()
+	$Hurtbox.max_health = level + 1
+	$Hurtbox.health = $Hurtbox.max_health
+	$Hitbox.damage = int(level)
 	$AnimatedSprite.disconnect("animation_finished", self, "_on_DeathAnimation_finished")
 	$Hitbox/CollisionShape2D.set_deferred("disabled", false)
 	$CollisionShape2D.set_deferred("disabled", false)

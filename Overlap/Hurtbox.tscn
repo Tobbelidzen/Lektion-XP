@@ -39,5 +39,6 @@ one_shot = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+
 [connection signal="animation_finished" from="AnimatedHit" to="." method="_on_AnimatedHit_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

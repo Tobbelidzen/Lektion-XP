@@ -4,10 +4,11 @@ export var max_health = 3
 export var gets_invincible = false
 export var invincibility_time = 1
 
-signal no_health
+
 
 onready var health = max_health setget set_health
 var blinking_animation
+signal no_health(value)
 
 func _ready():
 	var parent = get_parent()
@@ -29,7 +30,7 @@ func set_health(value):
 		var decreased = health > value
 		health = clamp(value, 0, max_health)
 		if health <= 0:
-			emit_signal("no_health")
+			emit_signal("no_health", self)
 		else:
 			if decreased:
 				$AudioStreamPlayer.play()

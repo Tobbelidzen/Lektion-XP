@@ -13,9 +13,12 @@ func _ready():
 func _on_Player_health_changed(value):
 	$CanvasLayer/HeartsUI.hearts = value
 
-func _on_Enemy_dead():
+func _on_Enemy_dead(_enemy):
 	$YSort/Player/Hurtbox.health += 1
-	current_xp += 1
+	current_xp += _enemy.get_parent().level + 1
+	print(_enemy.get_parent().level)
+	print("ENEMY")
+	print(_enemy)
 	if current_xp == xp_to_lvlup:
 		$YSort/Player/Hurtbox.max_health += 1
 		$CanvasLayer/HeartsUI.max_hearts += 1

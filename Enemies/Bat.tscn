@@ -181,15 +181,15 @@ shape = SubResource( 21 )
 [node name="WanderTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="Respawn" type="Timer" parent="."]
+one_shot = true
+
 [node name="BlinkingAnimation" type="AnimationPlayer" parent="."]
 anims/Start = SubResource( 22 )
 anims/Stop = SubResource( 23 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
-
-[node name="Respawn" type="Timer" parent="."]
-one_shot = true
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="no_health" from="Hurtbox" to="." method="_on_Hurtbox_no_health"]
